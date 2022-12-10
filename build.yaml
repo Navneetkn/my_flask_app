@@ -9,7 +9,7 @@
           path: /home/ubuntu/my_app
           state: directory
 
-      - name: transfering the file from jenkins to uild server
+      - name: transfering the file from jenkins to build server
         ansible.posix.synchronize:
           src: ./
           dest: /home/ubuntu/my_app
@@ -20,10 +20,10 @@
           chdir: /home/ubuntu/my_app
 
       - name: Docker image tagging(Versioning)
-        ansible.builtin.shell: "{{ item }}"
-        with_items:
-          docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:{{ version }}
-          docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:latest
+        ansible.builtin.shell: docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:{{ version }}
+          
+      - name: Docker image tagging(latest)
+        ansible.builtin.shell: docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:latest
       
       - name: pushing the image to dockerhub
         ansible.builtin.shell: "{{ item }}"
