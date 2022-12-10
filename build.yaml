@@ -24,15 +24,15 @@
         with_items:
           docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:{{ version }}
           docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:latest
-          docker login -u navaneetkn -p {{ password }}
       
       - name: pushing the image to dockerhub
         ansible.builtin.shell: "{{ item }}"
         with_items:
+          docker login -u navaneetkn -p {{ password }}
           docker image push navaneetkn/{{ job_name }}:{{ version }}
           docker image push navaneetkn/{{ job_name }}:latest
       
-      
+
       
       
       
