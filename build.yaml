@@ -1,0 +1,26 @@
+---
+  - name: Connecting to uild server
+    hosts: kube
+    # become: yes
+    # become_user: root
+    tasks:
+      - name: Create a my_app directory, if it does not exist
+        ansible.builtin.file:
+          path: /home/ubuntu/my_app
+          state: directory
+      - name: transfering the file from jenkins to uild server
+        ansible.posix.synchronize:
+          src: ./
+          dest: /home/ubuntu/my_app
+      - name: Run dockerfile on build server
+        ansible.builtin.shell: docker build -t {{ job_name }}:{{ version }}
+        args:
+          chdir: /home/ubuntu/my_app
+      - name: Docker image tagging(Versioning)
+        ansible.builtin.shell: docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:{{ version }}
+        args:
+          chdir: /home/ubuntu/my_app
+      - name: Building latest image
+        ansible.builtin.shell: docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:latest
+        args:
+          chdir: /home/ubuntu/my_app

@@ -16,4 +16,4 @@ def user(name):
     return f"<h1>hello {name}<h1>"
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
