@@ -25,12 +25,14 @@
       - name: Docker image tagging(latest)
         ansible.builtin.shell: docker image tag {{ job_name }}:{{ version }} navaneetkn/{{ job_name }}:latest
       
-      - name: pushing the image to dockerhub
-        ansible.builtin.shell: "{{ item }}"
-        with_items:
-          docker login -u navaneetkn -p {{ password }}
-          docker image push navaneetkn/{{ job_name }}:{{ version }}
-          docker image push navaneetkn/{{ job_name }}:latest
+      - name: logging in the docker hub
+        ansible.builtin.shell: docker login -u navaneetkn -p {{ password }}
+          
+      - name: Pushing the version image
+        ansible.builtin.shell: docker image push navaneetkn/{{ job_name }}:{{ version }}
+        
+      - name: Pusing the latest version
+        ansible.builtin.shell: docker image push navaneetkn/{{ job_name }}:latest
       
 
       
