@@ -1,8 +1,6 @@
 ---
   - name: Connecting to uild server
     hosts: kube
-    # become: yes
-    # become_user: root
     tasks:
       - name: Copy file with owner and permissions
         ansible.builtin.copy:
