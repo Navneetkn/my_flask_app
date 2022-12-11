@@ -15,4 +15,4 @@
       - name: Deploying the build
         ansible.builtin.shell: kubectl apply -f myapp_deployment.yaml
         args:
-          chdir: /home/ubuntu/kubernetes
+          chdir: /home/ubuntu/
