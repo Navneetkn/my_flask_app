@@ -1,6 +1,6 @@
 ---
   - name: Connecting to uild server
-    hosts: build_server
+    hosts: kube
     # become: yes
     # become_user: root
     tasks:
