@@ -1,6 +1,6 @@
 ---
   - name: Connecting to uild server
-    hosts: kube
+    hosts: build_server
     # become: yes
     # become_user: root
     tasks:
@@ -31,8 +31,15 @@
       - name: Pushing the version image
         ansible.builtin.shell: docker image push navaneetkn/{{ job_name }}:{{ version }}
         
-      - name: Pusing the latest version
+      - name: Pushing the latest version
         ansible.builtin.shell: docker image push navaneetkn/{{ job_name }}:latest
+
+      - name: Cleanup the images(Version)
+        ansible.builtin.shell: docker image rm navaneetkn/{{ job_name }}:{{ version }}
+
+      - name: Cleanup the images(Version)
+        ansible.builtin.shell: docker image rm navaneetkn/{{ job_name }}:latest
+
       
 
       
