@@ -10,6 +10,9 @@
       - name: logging in the docker hub
         ansible.builtin.shell: docker login -u navaneetkn -p {{ password }}
 
+      - name: Deleting the previus deployment
+        ansible.builtin.shell: kubectl delete -f myapp_deployment.yaml
+
       - name: Deploying the build
         ansible.builtin.shell: kubectl apply -f myapp_deployment.yaml
         args:
